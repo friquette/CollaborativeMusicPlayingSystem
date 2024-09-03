@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -11,7 +12,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 
-export default class CreateRoomPage extends Component {
+class CreateRoomPage extends Component {
     defaultVotes = 2;
 
     constructor(props) {
@@ -52,7 +53,7 @@ export default class CreateRoomPage extends Component {
         ).then(
             (response) => response.json()
         ).then(
-            (data) => console.log(data)
+            (data) => {this.props.navigate('/room/' + data.code)}
         );
     }
 
@@ -113,4 +114,10 @@ export default class CreateRoomPage extends Component {
             </Grid>
         </Grid>;
     }
+}
+
+
+export default function CreateRoomPageWrapper(props) {
+    const navigate = useNavigate();
+    return <CreateRoomPage {...props} navigate={navigate} />;
 }
